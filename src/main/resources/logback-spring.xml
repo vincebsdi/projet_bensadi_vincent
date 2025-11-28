@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Configuration du logger par défaut pour la console -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- Appender spécifique pour les virements -->
+    <appender name="VIREMENT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/virements.log</file>
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Rotation quotidienne des logs -->
+            <fileNamePattern>logs/virements.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Conserver 30 jours d'historique -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Logger spécifique pour les virements -->
+    <logger name="VIREMENT_LOGGER" level="INFO" additivity="false">
+        <appender-ref ref="VIREMENT_FILE"/>
+    </logger>
+
+    <!-- Configuration des logs par défaut -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
+
