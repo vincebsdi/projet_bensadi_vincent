@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -28,7 +31,14 @@ public class Conseiller {
     @Column(length = 20)
     private String telephone;
 
+    @Column(name = "max_clients", nullable = false)
+    private Integer maxClients = 10;
+
     @ManyToOne
     @JoinColumn(name = "agence_id", nullable = false)
     private Agence agence;
+
+    @OneToMany(mappedBy = "conseiller")
+    private Set<Client> clients = new HashSet<>();
+
 }

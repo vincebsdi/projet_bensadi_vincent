@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
-@Getter
+
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_compte", discriminatorType = DiscriminatorType.STRING)
@@ -33,6 +33,11 @@ public abstract class Compte {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    public BigDecimal getSolde()
+    {
+        return solde;
+    }
 
     public void crediter(BigDecimal montant)
     {

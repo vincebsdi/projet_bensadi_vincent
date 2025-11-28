@@ -3,7 +3,6 @@ package epita.projet_bensadi_vincent.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @DiscriminatorValue("COMPTE_COURANT")
-@Table(name = "compte_courant")
 public class CompteCourant extends Compte {
 
     @Column(name = "decouvert_autorise", nullable = false, precision = 10, scale = 2)

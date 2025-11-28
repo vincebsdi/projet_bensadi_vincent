@@ -34,6 +34,5 @@ public class Gerant {
     @JoinColumn(name = "agence_id")
     private Agence agence;
 
-    @OneToMany(mappedBy = "conseiller")
-    private Set<Client> clients = new HashSet<>();
+
 }
