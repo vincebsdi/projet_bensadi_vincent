@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
-
+@Getter
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type_compte", discriminatorType = DiscriminatorType.STRING)
@@ -42,6 +42,14 @@ public abstract class Compte {
     public void crediter(BigDecimal montant)
     {
         this.solde = this.solde.add(montant);
+    }
+
+    public void debiter(BigDecimal montant)
+    {
+        if (!peutRetirer(montant)) {
+            throw new IllegalArgumentException("Opération refusée : découvert autorisé dépassé");
+        }
+        this.solde = this.solde.subtract(montant);
     }
 
     public abstract boolean peutRetirer(BigDecimal montant);

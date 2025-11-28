@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @DiscriminatorValue("COMPTE_COURANT")
 public class CompteCourant extends Compte {
 
-    @Column(name = "decouvert_autorise", nullable = false, precision = 10, scale = 2)
+    @Column(name = "decouvert_autorise", nullable = true, precision = 10, scale = 2)
     private BigDecimal decouvertAutorise = new BigDecimal("1000.00");
 
     @Override

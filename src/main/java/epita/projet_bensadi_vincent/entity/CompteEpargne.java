@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @DiscriminatorValue("COMPTE_EPARGNE")
 public class CompteEpargne extends Compte{
 
-    @Column(name = "taux_remuneration", nullable = false, precision = 5, scale = 2)
+    @Column(name = "taux_remuneration", nullable = true, precision = 5, scale = 2)
     private BigDecimal tauxRemuneration = new BigDecimal("3.00");
 
     @Override

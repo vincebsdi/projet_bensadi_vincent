@@ -1,11 +1,7 @@
 package epita.projet_bensadi_vincent.config;
 
-import epita.projet_bensadi_vincent.entity.Agence;
-import epita.projet_bensadi_vincent.entity.Conseiller;
-import epita.projet_bensadi_vincent.entity.Gerant;
-import epita.projet_bensadi_vincent.repository.AgenceRepository;
-import epita.projet_bensadi_vincent.repository.ConseillerRepository;
-import epita.projet_bensadi_vincent.repository.GerantRepository;
+import epita.projet_bensadi_vincent.entity.*;
+import epita.projet_bensadi_vincent.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +12,9 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initDatabase(AgenceRepository agenceRepository,
                                    GerantRepository gerantRepository,
-                                   ConseillerRepository conseillerRepository) {
+                                   ConseillerRepository conseillerRepository,
+                                   ClientRepository clientRepository,
+                                   CompteRepository compteRepository) {
         return args -> {
             // Vérifier si des données existent déjà
             if (agenceRepository.count() > 0) {
@@ -56,8 +54,40 @@ public class DataInitializer {
             conseiller2.setAgence(agence);
             conseillerRepository.save(conseiller2);
 
-            System.out.println("✅ Données de test insérées : 1 agence, 1 gérant, 2 conseillers");
+            // Créer un client
+            Client client1 = new Client();
+            client1.setNom("Dupont");
+            client1.setPrenom("Jean");
+            client1.setEmail("jean.dupont@example.com");
+            client1.setTelephone("0601020304");
+            client1.setAdresse("10 rue de la Paix");
+            client1.setCodePostal("75001");
+            client1.setVille("Paris");
+            client1.setTypeClient(TypeClient.PARTICULIER);
+            client1.setConseiller(conseiller1);
+            client1 = clientRepository.save(client1);
+
+            // Créer un compte courant
+            CompteCourant compteCourant = new CompteCourant();
+            compteCourant.setNumeroCompte("CC001");
+            compteCourant.setSolde(new java.math.BigDecimal("1000.00"));
+            compteCourant.setDateOuverture(java.time.LocalDate.now());
+            compteCourant.setActif(true);
+            compteCourant.setClient(client1);
+            compteCourant.setDecouvertAutorise(new java.math.BigDecimal("1000.00"));
+            compteRepository.save(compteCourant);
+
+            // Créer un compte épargne
+            CompteEpargne compteEpargne = new CompteEpargne();
+            compteEpargne.setNumeroCompte("CE001");
+            compteEpargne.setSolde(new java.math.BigDecimal("5000.00"));
+            compteEpargne.setDateOuverture(java.time.LocalDate.now());
+            compteEpargne.setActif(true);
+            compteEpargne.setClient(client1);
+            compteEpargne.setTauxRemuneration(new java.math.BigDecimal("3.00"));
+            compteRepository.save(compteEpargne);
+
+            System.out.println("✅ Données de test insérées : 1 agence, 1 gérant, 2 conseillers, 1 client, 2 comptes");
         };
     }
 }
-
