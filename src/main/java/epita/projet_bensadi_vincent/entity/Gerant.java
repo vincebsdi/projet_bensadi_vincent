@@ -1,0 +1,39 @@
+package epita.projet_bensadi_vincent.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
+public class Gerant {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String nom;
+
+    @Column(nullable = false, length = 100)
+    private String prenom;
+
+    @Column(nullable = false, length = 150, unique = true)
+    private String email;
+
+    @Column(length = 20)
+    private String telephone;
+
+    @OneToOne
+    @JoinColumn(name = "agence_id")
+    private Agence agence;
+
+    @OneToMany(mappedBy = "conseiller")
+    private Set<Client> clients = new HashSet<>();
+}
